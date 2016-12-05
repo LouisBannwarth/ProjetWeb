@@ -23,7 +23,6 @@ class UserController implements ControllerProviderInterface {
 
 	public function validFormConnexionUser(Application $app, Request $req)
 	{
-
 		$app['session']->clear();
 		$donnees['login']=$req->get('login');
 		$donnees['password']=$req->get('password');
@@ -45,6 +44,12 @@ class UserController implements ControllerProviderInterface {
 			return $app["twig"]->render('v_session_connexion.html.twig');
 		}
 	}
+    public function showUser(Application $app) {
+        $this->userModel = new UserModel($app);
+        $id=$app["session"]->get('user_id');
+        $produits = $this->userModel->getUser($id);
+        return $app["twig"]->render('frontOff/showUser.html.twig',['data'=>$produits]);
+    }
 	public function deconnexionSession(Application $app)
 	{
 		$app['session']->clear();
@@ -58,6 +63,9 @@ class UserController implements ControllerProviderInterface {
 		$controllers->get('/login', 'App\Controller\UserController::connexionUser')->bind('user.login');
 		$controllers->post('/login', 'App\Controller\UserController::validFormConnexionUser')->bind('user.validFormlogin');
 		$controllers->get('/logout', 'App\Controller\UserController::deconnexionSession')->bind('user.logout');
+
+        $controllers->get('/showuser', 'App\Controller\UserController::showUser')->bind('user.showuser');
 		return $controllers;
 	}
+
 }

@@ -38,13 +38,13 @@ class ProduitController implements ControllerProviderInterface
         $this->produitModel = new ProduitModel($app);
         $id=$app["session"]->get('user_id');
         $produits = $this->produitModel->getCommandeId($id);
-        return $app["twig"]->render('frontOff/Produit/showCommande.html.twig',['commande'=>$produits]);
+        return $app["twig"]->render('frontOff/showCommande.html.twig',['commande'=>$produits]);
     }
     public function showCommandeAdm(Application $app) {
         $this->produitModel = new ProduitModel($app);
 
         $produits = $this->produitModel->getAllCommande();
-        return $app["twig"]->render('backOff/Produit/showCommande.html.twig',['commande'=>$produits]);
+        return $app["twig"]->render('backOff/showCommande.html.twig',['commande'=>$produits]);
     }
     public function showPanier(Application $app) {
         $this->produitModel = new ProduitModel($app);
