@@ -1,0 +1,35 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+
+    <div class="small-4 columns">
+        <table>
+            <caption>affiche table commande</caption>
+            <tr>
+                <th>id</th>
+
+                <th>date ajout</th>
+                <th>prix</th>
+                <th>etat</th>
+
+            </tr>
+            {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITclient' %}
+                {% for data in commande if commande is not empty %}
+
+                    <tr>
+                        <td>{{ data.id }}</td>
+                        <td>{{ data.date_achat }}</td>
+                        <td>{{ data.prix }}</td>
+                        <td>{{ data.etat_id }}</td>
+                    </tr>
+
+                {% endfor %}
+
+            {% endif %}
+
+            <tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}
+
