@@ -203,9 +203,10 @@ class ProduitModel {
     public function getAllCommande(){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('')
-            ->from('commandes', 'c')
-            ->innerJoin('p', 'user', 'u', 'pa.produit_id=p.id');
+            ->select('nom','c.id','c.user_id','prix','date_achat','libelle','etat_id')
+            ->from('commandes','c')
+            ->innerJoin('c', 'users', 'u', 'u.id=c.user_id')
+            ->innerJoin('c', 'etats', 'e', 'c.etat_id=e.id');
         return $queryBuilder->execute()->fetchAll();
     }
     public function getCommandeId($id){

@@ -18,9 +18,10 @@
                     <tr>
                         <td>{{ data.id }}</td>
                         <td>{{ data.user_id }}</td>
+                        <td>{{ data.nom }}</td>
                         <td>{{ data.date_achat }}</td>
                         <td>{{ data.prix }}</td>
-                        <td>{{ data.etat_id }}</td>
+                        <td>{{ data.libelle }}</td>
                         {% if data.etat_id==1 %}
                             <td><a href="{{ path('produit.editCommande', {id: data.id}) }}">Expedier</a></td>
                         {% endif %}
