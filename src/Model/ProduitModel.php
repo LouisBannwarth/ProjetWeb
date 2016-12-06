@@ -219,6 +219,18 @@ class ProduitModel {
         ;
         return $queryBuilder->execute()->fetchAll();
     }
+    public function getCommande($id){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('p.id','p.typeProduit_id','nom','p.prix','photo','pa.quantite','pa.dateAjoutPanier')
+            ->from('produits','p')
+            ->innerJoin('p','paniers','pa','pa.produit_id=p.id')
+            //->innerJoin('p','commande','c','c.id=pa.id_commande')
+            ->where('pa.commande_id=?')
+            ->setParameter(0, $id);
+        ;
+        return $queryBuilder->execute()->fetchAll();
+    }
     public function getNonCommandePanier($user_id){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder

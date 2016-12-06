@@ -7,9 +7,11 @@
             <tr>
                 <th>id</th>
                 <th>user_id</th>
+                <th>nom</th>
                 <th>date ajout</th>
                 <th>prix</th>
                 <th>etat</th>
+                <th>control</th>
 
             </tr>
             {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
@@ -22,9 +24,12 @@
                         <td>{{ data.date_achat }}</td>
                         <td>{{ data.prix }}</td>
                         <td>{{ data.libelle }}</td>
+                        <td>
                         {% if data.etat_id==1 %}
-                            <td><a href="{{ path('produit.editCommande', {id: data.id}) }}">Expedier</a></td>
+                            <a href="{{ path('produit.editCommande', {id: data.id}) }}">Expedier</a>
                         {% endif %}
+                        </td>
+                        <td><a href="{{ path('produit.afficheCommande', {id: data.id}) }}">detail</a></td>
                     </tr>
 
                 {% endfor %}

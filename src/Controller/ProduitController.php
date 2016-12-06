@@ -40,12 +40,18 @@ class ProduitController implements ControllerProviderInterface
         $produits = $this->produitModel->getCommandeId($id);
         return $app["twig"]->render('frontOff/showCommande.html.twig',['commande'=>$produits]);
     }
+    public function afficheCommande(Application $app,$id) {
+        $this->produitModel = new ProduitModel($app);
+        $produits = $this->produitModel->getCommande($id);
+        return $app["twig"]->render('backOff/showCommandeId.html.twig',['commande'=>$produits]);
+    }
     public function showCommandeAdm(Application $app) {
         $this->produitModel = new ProduitModel($app);
 
         $produits = $this->produitModel->getAllCommande();
         return $app["twig"]->render('backOff/showCommande.html.twig',['commande'=>$produits]);
     }
+
     public function showPanier(Application $app) {
         $this->produitModel = new ProduitModel($app);
         $id=$app["session"]->get('user_id');
@@ -294,6 +300,7 @@ class ProduitController implements ControllerProviderInterface
         $controllers->get('/showp', 'App\Controller\produitController::showPanier')->bind('produit.showp');
         $controllers->get('/showcom', 'App\Controller\produitController::showCommande')->bind('produit.showcom');
         $controllers->get('/showcomadm', 'App\Controller\produitController::showCommandeAdm')->bind('produit.showcomadm');
+        $controllers->get('/afficheCommande/{id}', 'App\Controller\produitController::affichecommande')->bind('produit.afficheCommande')->assert('id', '\d+');
 
         $controllers->get('/add', 'App\Controller\produitController::add')->bind('produit.add');
         $controllers->post('/add', 'App\Controller\produitController::validFormAdd')->bind('produit.validFormAdd');
