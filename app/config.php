@@ -1,7 +1,7 @@
 <?php
-define("hostname","localhost"); // ou serveurmysql
+define("hostname","serveurmysql"); // ou localhost
 
 define("database","BDD_lbannwar");
-define("username","root");
-define("password","");
+define("username","lbannwar");	//root
+define("password","1212"); 		//
 

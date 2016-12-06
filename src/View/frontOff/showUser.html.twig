@@ -7,21 +7,28 @@
         <table>
             <caption>Recapitulatifs utilisateur</caption>
             <thead>
-            <tr><th>nom</th><th>email</th><th>login</th><th>code postal</th><th>ville</th><th>adresse</th>
+            <tr>
+                <th>nom</th>
+                <th>email</th>
+                <th>login</th>
+                <th>code postal</th>
+                <th>ville</th>
+                <th>adresse</th>
                 {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITclient' %}
                     <th>opération</th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
-            {% for produit in data if data is not empty %}
-
                 <tr>
-                    <td>{{produit.nom}}</td><td>{{produit.email}}</td><td>{{produit.login}}</td><td>{{produit.code_postal}}</td><td>
-                        {{produit.ville}}</td><td>{{ produit.adresse }}</td>
-
+                    <td>{{ data.nom }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.login }}</td>
+                    <td>{{ data.code_postal }}</td>
+                    <td>{{ data.ville }}</td>
+                    <td>{{ data.adresse }}</td>
+                    <td><a href="{{ path('user.edit')}}">modifier</a></td>
                 </tr>
-            {% endfor %}
             <tbody>
         </table>
     </div>

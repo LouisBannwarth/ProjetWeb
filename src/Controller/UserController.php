@@ -47,14 +47,73 @@ class UserController implements ControllerProviderInterface {
     public function showUser(Application $app) {
         $this->userModel = new UserModel($app);
         $id=$app["session"]->get('user_id');
-        $produits = $this->userModel->getUser($id);
-        return $app["twig"]->render('frontOff/showUser.html.twig',['data'=>$produits]);
+        $user = $this->userModel->getUser($id);
+        return $app["twig"]->render('frontOff/showUser.html.twig',['data'=>$user]);
     }
 	public function deconnexionSession(Application $app)
 	{
 		$app['session']->clear();
 		$app['session']->getFlashBag()->add('msg', 'vous êtes déconnecté');
 		return $app->redirect($app["url_generator"]->generate("accueil"));
+	}
+	public function edit(Application $app) {
+
+		$this->userModel = new userModel($app);
+		$id=$app["session"]->get('user_id');
+		$donnees = $this->userModel->getUser($id);
+		return $app["twig"]->render('frontOff/editUser.html.twig',['donnees'=>$donnees]);
+	}
+
+	public function validFormEdit(Application $app, Request $req) {
+		// var_dump($app['request']->attributes);
+		if (isset($_POST['nom']) && isset($_POST['email']) and isset($_POST['login']) and isset($_POST['code_postal']) and isset($_POST['ville'])and isset($_POST['adresse'])) {
+			$donnees = [
+					'nom' => htmlspecialchars($_POST['nom']),                    // echapper les entrées
+					'email' => htmlspecialchars($_POST['email']),  //$app['request']-> ne focntionne plus
+					'login' => htmlspecialchars($_POST['login']),
+					'code_postal' => htmlspecialchars($_POST['code_postal']),
+					'ville' => htmlspecialchars($_POST['ville']),
+					'adresse' => htmlspecialchars($_POST['adresse'])
+
+			];
+			if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['nom']))) $erreurs['nom']='nom composé de 2 lettres minimum';
+			if ((! preg_match("/^[A-Za-z0-9]{2,}/",$donnees['login']))) $erreurs['login']='login composé de 2 caractere minimum';
+			if(! is_numeric($donnees['code_postal']))$erreurs['code_postal']='veuillez saisir une valeur';
+			if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['ville']))) $erreurs['ville']='ville composé de 2 lettres minimum';
+			if (! preg_match("/[A-Za-z0-9]{2,}@[A-Za-z]{1,}.[A-Za-z]{1,}/",$donnees['email'])) $erreurs['email']='email n\'est pas correct';
+			if ((! preg_match("/^[A-Za-z0-9]{5,}/",$donnees['adresse']))) $erreurs['adresse']='adresse composé de 2 caractere minimum';
+
+
+
+			$errors = $app['validator']->validate($donnees);  // ce n'est pas validateValue
+
+			//    $violationList = $this->get('validator')->validateValue($req->request->all(), $contraintes);
+//var_dump($violationList);
+
+			//   die();
+			if (count($errors) > 0) {
+				// foreach ($errors as $error) {
+				//     echo $error->getPropertyPath().' '.$error->getMessage()."\n";
+				// }
+				// //die();
+				//var_dump($erreurs);
+
+				// if(! empty($erreurs))
+				// {
+				return $app["twig"]->render('frontOff/editUser.html.twig',['donnees'=>$donnees,'errors'=>$errors,'erreurs'=>$erreurs]);
+			}
+			else
+			{
+				$this->Usermodel = new UserModel($app);
+				$id=$app["session"]->get('user_id');
+				$this->Usermodel->updateUser($donnees,$id);
+				return $app->redirect($app["url_generator"]->generate("produit.index"));
+			}
+
+		}
+		else
+			return $app->abort(404, 'error Pb id form edit');
+
 	}
 
 	public function connect(Application $app) {
@@ -63,6 +122,8 @@ class UserController implements ControllerProviderInterface {
 		$controllers->get('/login', 'App\Controller\UserController::connexionUser')->bind('user.login');
 		$controllers->post('/login', 'App\Controller\UserController::validFormConnexionUser')->bind('user.validFormlogin');
 		$controllers->get('/logout', 'App\Controller\UserController::deconnexionSession')->bind('user.logout');
+
+		$controllers->get('/edit', 'App\Controller\UserController::edit')->bind('user.edit');
 
         $controllers->get('/showuser', 'App\Controller\UserController::showUser')->bind('user.showuser');
 		return $controllers;
