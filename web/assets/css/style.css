@@ -1,31 +1,31 @@
 .top-bar .name h1 a {
-  color: #d9534f;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
+    color: #d9534f;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
 }
 .top-bar-section ul li > a {
-  color: #d9534f;
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -ms-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;	
+    color: #d9534f;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
 }
 .top-bar .name h1 a:hover {
-  	color: #fff;
+    color: #fff;
 }
 .top-bar-section li.active:not(.has-form) a:not(.button) {
-	background: none repeat scroll 0% 0% #d9534f;
+    background: none repeat scroll 0% 0% #d9534f;
 }
 .top-bar-section li.active:not(.has-form) a:not(.button):hover {
-	background: none repeat scroll 0% 0% #222;
+    background: none repeat scroll 0% 0% #222;
 }
 .jumbotron {
-	padding: 30px 15px;
-	margin-bottom: 30px;
-	color: inherit;
-	background-color: #EEE;
+    padding: 30px 15px;
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: #EEE;
 }
 button, .button {
     background-color: #d9534f;
@@ -34,13 +34,40 @@ button, .button:hover {
     background-color: #d9534f;
 }
 button:hover, button:focus, .button:hover, .button:focus {
-    background-color: #222; 
+    background-color: #222;
 }
 footer {
-   width: 100%;
-   bottom: 0px;
-   left: 0px;
-   background-color: #333;
-   
+    padding: 10px 3px 10px 3px;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background-color: #333333;
+    color: #d9534f;
+}
+.titre_accueil{
+    text-align: center;
+    border: solid 3px;
+    border-radius: 30px;
+    background-color: #333333;
+    color: #d9534f;
+    width: 50%;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.img_accueil{
+    margin: auto;
+    display: block;
+    width: 550px;
+    height: 500px;
 }
 
+.row{
+    margin-bottom: 5%;
+}
+
+.log{
+    box-shadow: 6px 6px 6px #d9534f;
+}

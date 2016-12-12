@@ -1,4 +1,3 @@
-
 {% extends "layout.html.twig" %}
 {% block contenu %}
     <form method="post" action="{{ path('user.validFormlogin') }}">
@@ -6,21 +5,21 @@
         <div class="row">
 
             <fieldset>
-                <legend>Se connecter  (avec twig)</legend>
+                <legend>Espace de connexion</legend>
                 <label>Login :
-                    <input name="login"  type="text"  size="18" value="" />
+                        <input class="log" name="login"  type="text"  size="18" value="" />
                 </label>
 
-                <label>Password :
-                    <input name="password"  type="text"  size="18" value="" />
+                <label class="password">Password :
+                    <input name="password"  type="password"  size="18" value="" />
                 </label>
                 {% if app.session.get('erreur') is not empty %}
                     <small class="error">{{ app.session.get('erreur') }}</small>
                 {% endif %}
 
                 <input type="submit" name="seConnecter" value="Se connecter" />
-	</fieldset>
-</div>
+	        </fieldset>
+        </div>
 </form>
 
 {% endblock %}
