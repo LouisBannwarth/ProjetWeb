@@ -1,0 +1,9 @@
+
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITclient' %}
+
+        <a href="{{ path('produit.editPanier', {id: produit.id}) }}">ajouter au panier</a>
+
+    {% endif %}
+{% endblock %}

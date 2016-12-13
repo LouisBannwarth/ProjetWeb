@@ -13,7 +13,7 @@
         <li class="has-dropdown"><a href="#">produits</a>
           <ul class="dropdown">
             <li><a href="{{ path('produit.showc') }}">afficher les produits</a></li>
-            <li><a href="#">rechercher un produit </a></li>
+            <li><a href="{{ path('produit.showrech',{id: -1}) }}">rechercher un produit </a></li>
           </ul>
         </li>
         <li><a href="{{ path('produit.showp') }}">panier</a>

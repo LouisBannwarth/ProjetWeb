@@ -15,6 +15,7 @@
                     <th>prix</th>
                     <th>nom photo</th>
                     <th>photo</th>
+                    <th>quantité</th>
                     {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
                         <th>opération</th>
                     {% endif %}
@@ -33,12 +34,16 @@
                             <img style="width:40px;height:40px" src="{{ asset('images/') }}{{ produit.photo }}"
                                  alt="image de {{ produit.libelle }}">
                         </td>
-                        {% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITclient' %}
-                            <td>
-                                <a href="{{ path('produit.editPanier', {id: produit.id}) }}">ajouter au panier</a>
+                        <td>
+                            <form action= "{{ path ('produit.editPanier', {id: produit.id}) }}" method="get">
+                                <SELECT name="quantite">
+                                    <OPTION>1<OPTION>2<OPTION>3<OPTION>4<OPTION>5<OPTION>6<OPTION>7<OPTION>8<OPTION>9<OPTION>10
+                                </SELECT>
+                                <input type="submit" name="modifier" value="ajouter"/>
+                            </form>
 
-                            </td>
-                        {% endif %}
+
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

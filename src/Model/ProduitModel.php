@@ -29,6 +29,24 @@ class ProduitModel {
 
     }
 
+    public function getProduitRech($id) {
+//        $sql = "SELECT p.id, t.libelle, p.nom, p.prix, p.photo
+//            FROM produits as p,typeProduits as t
+//            WHERE p.typeProduit_id=t.id ORDER BY p.nom;";
+//        $req = $this->db->query($sql);
+//        return $req->fetchAll();
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('p.id', 't.libelle', 'p.nom', 'p.prix', 'p.photo')
+            ->from('produits', 'p')
+            ->innerJoin('p', 'typeProduits', 't', 'p.typeProduit_id=t.id')
+            ->addOrderBy('p.nom', 'ASC')
+            ->where('t.libelle like ?')
+            ->setParameter(0, $id);
+        return $queryBuilder->execute()->fetchAll();
+
+    }
+
     public function insertProduit($donnees) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder->insert('produits')
@@ -63,7 +81,7 @@ class ProduitModel {
         ;
         return $queryBuilder->execute();
     }
-    public function insertPanier($donnees,$user_id) {
+    public function insertPanier($donnees,$user_id,$quantite) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
             ->select('p.quantite,p.id')
@@ -87,7 +105,7 @@ class ProduitModel {
                     'produit_id' => '?',
                     'commande_id' => '?'
                 ])
-                ->setParameter(0, 1)
+                ->setParameter(0, $quantite)
                 ->setParameter(1, $donnees['prix'])
                 ->setParameter(2, date('Y-m-d H:i:s'))
                 ->setParameter(3, $user_id)
@@ -101,7 +119,7 @@ class ProduitModel {
 
                 ->set('quantite', '?')
                 ->where('id= ?')
-                ->setParameter(0, $donnees2['quantite']+1)
+                ->setParameter(0, $donnees2['quantite']+$quantite)
                 ->setParameter(1, $donnees2['id']);
 
             return $queryBuilder3->execute();
